@@ -75,8 +75,12 @@ document.addEventListener("DOMContentLoaded", () => {
             const email = decodeURIComponent(btn.getAttribute("data-email"));
             try {
               const response = await fetch(
-                `/activities/${encodeURIComponent(activityName)}/unregister?email=${encodeURIComponent(email)}`,
-                { method: "POST" }
+                `/activities/${encodeURIComponent(activityName)}/unregister`,
+                {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ email })
+                }
               );
               const result = await response.json();
               if (response.ok) {
@@ -123,10 +127,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const activity = document.getElementById("activity").value;
 
     try {
+
       const response = await fetch(
-        `/activities/${encodeURIComponent(activity)}/signup?email=${encodeURIComponent(email)}`,
+        `/activities/${encodeURIComponent(activity)}/signup`,
         {
           method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email })
         }
       );
 
